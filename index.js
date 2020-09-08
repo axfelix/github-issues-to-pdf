@@ -491,6 +491,20 @@ async function renderIssue(issue) {
 
 		await page.goto(`https://github.com/${issue.owner}/${issue.repo}/issues/${issue.num}`, { waitUntil: 'networkidle2' });
 
+		await page.evaluate((sel) => {
+			var elements = document.querySelectorAll(sel);
+			for(var i=0; i< elements.length; i++){
+				elements[i].parentNode.removeChild(elements[i]);
+			}
+		}, "signup-prompt")
+
+		await page.evaluate((sel) => {
+			var elements = document.querySelectorAll(sel);
+			for(var i=0; i< elements.length; i++){
+				elements[i].parentNode.removeChild(elements[i]);
+			}
+		}, ".discussion-sidebar-item")
+
 		if (!fs.existsSync(localPath)) {
 			fs.mkdirSync(localPath);
 		}
